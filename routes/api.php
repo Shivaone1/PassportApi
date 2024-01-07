@@ -28,3 +28,7 @@ Route::controller(userController::class)->group(function(){
     Route::get('logout','userLogout');
 
 })->middleware('auth:api');
+
+// Route::group(['middleware' => 'auth:api'], function () {
+//     Route::get('user', [userController::class, 'getuser']);
+// });
