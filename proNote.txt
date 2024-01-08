@@ -6,3 +6,50 @@ php artisan db:seed
 http://127.0.0.1:8000/api/user
 
 http://127.0.0.1:8000/api/login
+
+
+------------------------------------
+class articleController extends Controller{
+    public function index(){
+        $articles=DB::table('articles')
+        ->select('articles.*','authors.name as authorsName','categories.name as categoriesName')
+        ->leftJoin('authors','authors.id','articles.fk_author_id')
+        ->leftJoin('categories','categories.id','articles.fk_categories_id')
+        ->get();
+        //dd($articles);
+        return view('articles',['articles'=>$articles]);
+    }
+}
+--------------
+View Section
+@if(!empty($articles))
+@foreach($articles as $article)
+<tr>
+<td>{{ $article->id }} </td>
+<td>{{ $article->title }} </td>
+<td>{{ $article->authorsName }} </td>
+<td>{{ $article->categoriesName }} </td>
+</tr>
+@endforeach
+@endif
+------------------
+Searching
+--------------
+class articleController extends Controller{
+public function index(Request $Request){
+        $articles=DB::table('articles');
+        if($request->keyword !=null){
+            $articles=$articles->orwhere('articles.title','like','%'.$request->keyword.'%');
+            $articles=$articles->orwhere('authors.name','like','%'.$request->keyword.'%');
+            $articles=$articles->orwhere('categories.name','like','%'.$request->keyword.'%');
+        }
+        $articles=DB::$articles
+                    ->select('articles.*','authors.name as authorsName','categories.name as categoriesName')
+                    ->leftJoin('authors','authors.id','articles.fk_author_id')
+                    ->leftJoin('categories','categories.id','articles.fk_categories_id')
+                    ->get();
+                    //dd($articles);
+        return view('articles',['articles'=>$articles]);
+    }
+}
+// https://www.youtube.com/watch?v=swFuWdLmARc

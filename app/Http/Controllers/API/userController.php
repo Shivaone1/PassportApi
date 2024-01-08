@@ -21,7 +21,7 @@ class userController extends Controller
         $user=Auth::user();
         $token = $user->createToken('MyAppToken')->accessToken;
         return response(['status'=>200,'token'=>$token],200);
-// dd($token);
+        // dd($token);
         // $request->validate([
         //     'email' => 'required|email',
         //     'password' => 'required',
