@@ -53,3 +53,32 @@ public function index(Request $Request){
     }
 }
 // https://www.youtube.com/watch?v=swFuWdLmARc
+
+/// New Note 
+http://127.0.0.1:8000/api/users
+
+php artisan serve --host=198.168.0.3:8000
+
+composer require laravel/passport
+composer update -w --ignore-platform-req=ext-sodium
+composer require laravel/passport
+php artisan migrate
+php artisan passport:install
+
+
+# Purge revoked and expired tokens and auth codes...
+php artisan passport:purge
+# Only purge tokens expired for more than 6 hours...
+php artisan passport:purge --hours=6
+
+
+create seeder
+php artisan migrate --seed
+php artisan make:seeder MainCategorySeeder
+
+php artisan db:seed --class=MainCategorySeeder
+
+php artisan migrate fresh --seed
+
+php artisan make:factory ProductFactory
+
